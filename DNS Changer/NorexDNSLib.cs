@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Management;
 using System.Net.Sockets;
+using System.Net;
 
 namespace DNS_Changer
 {
@@ -123,6 +124,45 @@ namespace DNS_Changer
                     return item;
                 }
             }
+            return null;
+        }
+        /// <summary>
+        /// gets active dns from active network
+        /// </summary>
+        /// <returns>a string array of name servers</returns>
+        public static string[] GetActiveDnsServers()
+        {
+            NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (NetworkInterface adapter in adapters)
+            {
+                // Check only active/connected NICs
+                if (adapter.OperationalStatus == OperationalStatus.Up)
+                {
+                    IPInterfaceProperties ipProps = adapter.GetIPProperties();
+
+                    // Check for valid DNS server addresses
+                    if (ipProps.DnsAddresses.Count > 0)
+                    {
+                        List<string> dnsServers = new List<string>();
+
+                        foreach (IPAddress dnsAddress in ipProps.DnsAddresses)
+                        {
+                            string addressString = dnsAddress.ToString();
+
+                            // Ignore link-local or loopback addresses
+                            if (!addressString.StartsWith("169.254.") && !IPAddress.IsLoopback(dnsAddress))
+                                dnsServers.Add(addressString);
+                        }
+
+                        // Return list of valid DNS servers found.
+                        return dnsServers.ToArray();
+                    }
+
+                }
+            }
+
+            // No valid network interfaces found, returns null indicating no active internet connection.
             return null;
         }
 
