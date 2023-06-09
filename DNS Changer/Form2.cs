@@ -19,10 +19,6 @@ namespace DNS_Changer
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            maskedTextBox1.Mask = "###.###.###.###" ;
-            maskedTextBox1.ValidatingType = typeof(System.Net.IPAddress);
-            maskedTextBox2.Mask = "###.###.###.###";
-            maskedTextBox2.ValidatingType = typeof(System.Net.IPAddress);
 
         }
 
@@ -33,7 +29,22 @@ namespace DNS_Changer
 
         private void button1_Click(object sender, EventArgs e)
         {
-          
+            if (textBox3.Text.Trim() == "")
+            {
+                MessageBox.Show("please enter a name for dns");
+            }
+            else if (NorexDNSLib.IsValidIpAddress(textBox2.Text))
+            {
+                MessageBox.Show("please enter a valid ip for ns1");
+            }
+            else if (NorexDNSLib.IsValidIpAddress(textBox1.Text))
+            {
+                MessageBox.Show("please enter a valid ip for ns2");
+            }
+            else
+            {
+                // add dns to data.csv file
+            }
         }
     }
 }

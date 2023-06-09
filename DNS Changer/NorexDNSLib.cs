@@ -165,6 +165,16 @@ namespace DNS_Changer
             // No valid network interfaces found, returns null indicating no active internet connection.
             return null;
         }
+        /// <summary>
+        /// validating an ip address
+        /// </summary>
+        /// <param name="ipAddressText"> the ip address</param>
+        /// <returns>true for is valid and false for not valid</returns>
+        public static bool IsValidIpAddress(string ipAddressText)
+        {
+            IPAddress ipAddress;
+            return IPAddress.TryParse(ipAddressText, out ipAddress);
+        }
 
     }
 }

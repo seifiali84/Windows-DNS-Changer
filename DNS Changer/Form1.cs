@@ -11,7 +11,8 @@ namespace DNS_Changer
         List<NetworkInterface> Networks = new List<NetworkInterface>();
         private void button3_Click(object sender, EventArgs e)
         {
-
+            Form2 f2 = new Form2();
+            f2.ShowDialog();
         }
 
         private void label1_Click(object sender, EventArgs e)
