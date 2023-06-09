@@ -38,6 +38,18 @@ namespace DNS_Changer
                 comboBox1.Items.Add(item.Name);
             }
             comboBox1.SelectedItem = NorexDNSLib.GetActiveEthernetOrWifiNetworkInterface().Name;
+            label3.Text = "";
+            if (NorexDNSLib.GetActiveDnsServers() != null)
+            {
+                foreach (var item in NorexDNSLib.GetActiveDnsServers())
+                {
+                    label3.Text += item + "\n";
+                }
+            }
+            else
+            {
+                label3.Text = "Clear";
+            }
         }
     }
 }
