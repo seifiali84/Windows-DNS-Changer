@@ -40,11 +40,11 @@ namespace DNS_Changer
             {
                 MessageBox.Show("please enter a name for dns");
             }
-            else if (NorexDNSLib.IsValidIpAddress(textBox2.Text))
+            else if (!NorexDNSLib.IsValidIpAddress(textBox2.Text))
             {
                 MessageBox.Show("please enter a valid ip for ns1");
             }
-            else if (NorexDNSLib.IsValidIpAddress(textBox1.Text))
+            else if (!NorexDNSLib.IsValidIpAddress(textBox1.Text))
             {
                 MessageBox.Show("please enter a valid ip for ns2");
             }

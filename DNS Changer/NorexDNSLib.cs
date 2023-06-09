@@ -119,7 +119,7 @@ namespace DNS_Changer
             List<NetworkInterface> Networks = GetAllNetworkInterfaces();
             foreach (var item in Networks)
             {
-                if(item.Name == NicName)
+                if (item.Name == NicName)
                 {
                     return item;
                 }
@@ -172,8 +172,25 @@ namespace DNS_Changer
         /// <returns>true for is valid and false for not valid</returns>
         public static bool IsValidIpAddress(string ipAddressText)
         {
-            IPAddress ipAddress;
-            return IPAddress.TryParse(ipAddressText, out ipAddress);
+            string[] ipText = ipAddressText.Split('.');
+            string numbers = "0123456789";
+            int dotcount = ipText.Length;
+            bool Warn = false;
+            foreach (var item in ipAddressText)
+            {
+                if (!numbers.Contains(item) && item == '.')
+                {
+                    Warn = true;
+                }
+            }
+            int[] ip = { Convert.ToInt32(ipText[0]), Convert.ToInt32(ipText[1]), Convert.ToInt32(ipText[2]), Convert.ToInt32(ipText[3]) };
+            if (dotcount != 3 || Warn)
+                return false;
+            else if (ip[0] > 255 || ip[1] > 255 || ip[2] > 255 || ip[3] > 255)
+                return false;
+            else
+                return true;
+            
         }
 
     }

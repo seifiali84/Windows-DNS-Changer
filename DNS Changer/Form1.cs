@@ -14,11 +14,7 @@ namespace DNS_Changer
             Form2 f2 = new Form2();
             f2.ShowDialog();
         }
-        string path = "data/data.csv";
-        private void AddDataToCsvFile()
-        {
 
-        }
         private void label1_Click(object sender, EventArgs e)
         {
 
