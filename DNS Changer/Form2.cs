@@ -26,7 +26,22 @@ namespace DNS_Changer
         private void AddDataToCsvFile(string DNSName, string ns1, string ns2)
         {
             string[] data = { DNSName + "," + ns1 + "," + ns2 };
-            File.AppendAllLines(path , data);
+            if (!Directory.Exists("data")) // Check if directory already exists
+            {
+                Directory.CreateDirectory("data"); // Create the directory if it doesn't exist
+                File.Create(path);
+                File.AppendAllLines(path, data);
+            }
+            else if (!File.Exists(path))
+            {
+                File.Create(path);
+                File.AppendAllLines(path, data);
+            }
+            else
+            {
+                File.AppendAllLines(path, data);
+            }
+
         }
         // cancel button
         private void button2_Click(object sender, EventArgs e)
@@ -52,6 +67,8 @@ namespace DNS_Changer
             {
                 // add dns to data.csv file
                 AddDataToCsvFile(textBox3.Text, textBox2.Text, textBox1.Text);
+                MessageBox.Show("Your DNS Added to DNS List.");
+                this.Close();
             }
         }
 

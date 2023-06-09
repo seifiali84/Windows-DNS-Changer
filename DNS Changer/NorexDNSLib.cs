@@ -178,18 +178,22 @@ namespace DNS_Changer
             bool Warn = false;
             foreach (var item in ipAddressText)
             {
-                if (!numbers.Contains(item) && item == '.')
+                if (!numbers.Contains(item) && item != '.')
                 {
                     Warn = true;
                 }
             }
-            int[] ip = { Convert.ToInt32(ipText[0]), Convert.ToInt32(ipText[1]), Convert.ToInt32(ipText[2]), Convert.ToInt32(ipText[3]) };
-            if (dotcount != 3 || Warn)
-                return false;
-            else if (ip[0] > 255 || ip[1] > 255 || ip[2] > 255 || ip[3] > 255)
+            if (dotcount != 4 || Warn)
                 return false;
             else
-                return true;
+            {
+                int[] ip = { Convert.ToInt32(ipText[0]), Convert.ToInt32(ipText[1]), Convert.ToInt32(ipText[2]), Convert.ToInt32(ipText[3]) };
+                if (ip[0] > 255 || ip[1] > 255 || ip[2] > 255 || ip[3] > 255)
+                    return false;
+                else
+                    return true;
+            }
+
             
         }
 
