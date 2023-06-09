@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DNS_Changer
 {
@@ -21,7 +22,13 @@ namespace DNS_Changer
         {
 
         }
-
+        string path = "data/data.csv";
+        private void AddDataToCsvFile(string DNSName, string ns1, string ns2)
+        {
+            string[] data = { DNSName + "," + ns1 + "," + ns2 };
+            File.AppendAllLines(path , data);
+        }
+        // cancel button
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -44,7 +51,28 @@ namespace DNS_Changer
             else
             {
                 // add dns to data.csv file
+                AddDataToCsvFile(textBox3.Text, textBox2.Text, textBox1.Text);
             }
+        }
+
+
+        private void textBox2_Leave(object sender, EventArgs e)
+        {
+            // validating
+            if (!NorexDNSLib.IsValidIpAddress(textBox2.Text))
+                label5.Visible = true;
+            else
+                label5.Visible = false;
+            
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            // validating
+            if (!NorexDNSLib.IsValidIpAddress(textBox1.Text))
+                label3.Visible = true;
+            else
+                label3.Visible = false;
         }
     }
 }
