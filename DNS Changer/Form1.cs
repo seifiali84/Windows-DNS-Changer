@@ -32,6 +32,12 @@ namespace DNS_Changer
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Networks = NorexDNSLib.GetAllNetworkInterfaces();
+            foreach (var item in Networks)
+            {
+                comboBox1.Items.Add(item.Name);
+            }
+            comboBox1.SelectedItem = NorexDNSLib.GetActiveEthernetOrWifiNetworkInterface().Name;
         }
     }
 }

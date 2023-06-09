@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Management;
+using System.Net.Sockets;
 
 namespace DNS_Changer
 {
@@ -105,5 +106,25 @@ namespace DNS_Changer
             // Display error message if no matching network adapters found.
             MessageBox.Show($"No active network adapters found with name '{nicName}'. Please check your input and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+        /// <summary>
+        /// Search a Network interface 
+        /// </summary>
+        /// <param name="NicName">the name of network interface</param>
+        /// <returns>the network interface that you enter the name <br >
+        /// returns null if the Interface not found (404)
+        /// </returns>
+        public static NetworkInterface ReadNetworkInterfaceByName(string NicName)
+        {
+            List<NetworkInterface> Networks = GetAllNetworkInterfaces();
+            foreach (var item in Networks)
+            {
+                if(item.Name == NicName)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
     }
 }
