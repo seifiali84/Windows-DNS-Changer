@@ -67,7 +67,7 @@ namespace DNS_Changer
             }
             else
             {
-                MessageBox.Show("path not exist");
+                MessageBox.Show("data path not exist");
             }
             return names;
         }

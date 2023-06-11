@@ -65,9 +65,6 @@ namespace DNS_Changer
                     object result = mo.InvokeMethod("SetDNSServerSearchOrder", dnsClientConfig, null);
 
                     // If successful, display a message box indicating success
-                    if ((uint)result == 0)
-                        MessageBox.Show($"DNS servers changed to {string.Join(", ", dnsAddresses)} for network adapter '{nicName}'", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                     return; // Exit loop after setting first matching network adapter's configuration.
                 }
             }
