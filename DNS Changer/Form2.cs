@@ -91,5 +91,37 @@ namespace DNS_Changer
             else
                 label3.Visible = false;
         }
+
+        private void textBox3_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter || e.KeyCode == Keys.Down)
+            {
+                textBox2.Select();
+            }
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter || e.KeyCode == Keys.Down)
+            {
+                textBox1.Select();
+            }
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter || e.KeyCode == Keys.Down)
+            {
+                button1.Select();
+            }
+        }
+
+        private void button1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Down || e.KeyCode == Keys.Right)
+            {
+                button2.Select();
+            }
+        }
     }
 }
