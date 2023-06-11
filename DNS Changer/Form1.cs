@@ -4,6 +4,8 @@ namespace DNS_Changer
 {
     public partial class Form1 : Form
     {
+        NetworkInterface SelectedNET;
+        string[] SelectedDNS;
         public Form1()
         {
             InitializeComponent();
@@ -33,7 +35,21 @@ namespace DNS_Changer
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            if(SelectedDNS == null)
+            {
+                MessageBox.Show("Select a dns or add a new one.");
+            }
+            else if(SelectedNET == null)
+            {
+                MessageBox.Show("Network Interface not found(404)");
+            }
+            else
+            {
+                string[] DNS = { SelectedDNS[1], SelectedDNS[2] };
+                NorexDNSLib.SetDnsServers(SelectedNET.Name , DNS);
+                MessageBox.Show("DNS is Set.");
+                label3.Text = DNS[0] + "\n" + DNS[1];
+            }
         }
 
         private List<string> GetDNSNames()
@@ -41,7 +57,7 @@ namespace DNS_Changer
             List<string> names = new List<string>();
             if (File.Exists(path))
             {
-                
+
                 var data = File.ReadAllLines(path);
 
                 foreach (var item in data)
@@ -62,7 +78,8 @@ namespace DNS_Changer
             {
                 comboBox1.Items.Add(item.Name);
             }
-            comboBox1.SelectedItem = NorexDNSLib.GetActiveEthernetOrWifiNetworkInterface().Name;
+            SelectedNET = NorexDNSLib.GetActiveEthernetOrWifiNetworkInterface();
+            comboBox1.SelectedItem = SelectedNET;
             comboBox2.Items.Clear();
             foreach (var item in GetDNSNames())
             {
@@ -85,6 +102,25 @@ namespace DNS_Changer
         private void button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedNET = NorexDNSLib.ReadNetworkInterfaceByName(comboBox1.Text);
+        }
+        private string[] ReadDNSByName(string DNSName)
+        {
+            string[] data = File.ReadAllLines(path);
+            var q = from i in data where i.Split(',')[0] == DNSName select i;
+            foreach (var item in q)
+            {
+                return item.Split(',');
+            }
+            return null;
+        }
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedDNS = ReadDNSByName(comboBox2.Text);
         }
     }
 }
