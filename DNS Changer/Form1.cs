@@ -35,18 +35,18 @@ namespace DNS_Changer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(SelectedDNS == null)
+            if (SelectedDNS == null)
             {
                 MessageBox.Show("Select a dns or add a new one.");
             }
-            else if(SelectedNET == null)
+            else if (SelectedNET == null)
             {
                 MessageBox.Show("Network Interface not found(404)");
             }
             else
             {
                 string[] DNS = { SelectedDNS[1], SelectedDNS[2] };
-                NorexDNSLib.SetDnsServers(SelectedNET.Name , DNS);
+                NorexDNSLib.SetDnsServers(SelectedNET.Name, DNS);
                 MessageBox.Show("DNS is Set.");
                 label3.Text = DNS[0] + "\n" + DNS[1];
             }
@@ -79,7 +79,7 @@ namespace DNS_Changer
                 comboBox1.Items.Add(item.Name);
             }
             SelectedNET = NorexDNSLib.GetActiveEthernetOrWifiNetworkInterface();
-            comboBox1.SelectedItem = SelectedNET;
+            comboBox1.SelectedItem = SelectedNET.Name;
             comboBox2.Items.Clear();
             foreach (var item in GetDNSNames())
             {
@@ -101,7 +101,25 @@ namespace DNS_Changer
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            if (SelectedNET == null)
+            {
+                MessageBox.Show("Select a Network Iterface");
+            }
+            NorexDNSLib.DisableDns(SelectedNET.Name);
+            MessageBox.Show("DNS Disabled");
+            string[] DNS = NorexDNSLib.GetActiveDnsServers();
+            if(DNS.Length > 0)
+            {
+                label3.Text = "";
+                foreach (var item in DNS)
+                {
+                    label3.Text += item + "\n";
+                }
+            }
+            else
+            {
+                label3.Text = "Clear";
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

@@ -94,9 +94,6 @@ namespace DNS_Changer
                     object result = mo.InvokeMethod("SetDNSServerSearchOrder", dnsClientConfig, null);
 
                     // If successful, display a message box indicating success and return.
-                    if ((uint)result == 0)
-                        MessageBox.Show($"DNS servers disabled for network adapter '{nicName}'", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                     return;
                 }
             }
